@@ -1,0 +1,6 @@
+FIGURE parallelogram
+VEC 5,0
+VEC 0,5
+COLOR 0,0,0
+NAME prikol
+END
