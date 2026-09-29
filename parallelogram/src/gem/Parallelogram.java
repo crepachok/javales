@@ -1,7 +1,5 @@
 package gem;
 
-import java.awt.*;
-
 public class Parallelogram implements IFlatFigure, Comparable<Parallelogram>{
     private Vector _top;
     private Vector _bot;
@@ -27,8 +25,20 @@ public class Parallelogram implements IFlatFigure, Comparable<Parallelogram>{
         this.Color = color;
     }
 
-    public String GetTitle(ITitled title) {
+    public String GetTitle(ITitled title){
         return title.GetTitle();
+    }
+    public double GetAngle(){
+        return _angle;
+    }
+    public String GetType(){
+        return "Parallelogram";
+    }
+    public String GetName(){ 
+        return Name;
+    }
+    public Color GetColor(){ 
+        return Color;
     }
 
     public double GetArea(){

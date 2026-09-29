@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.*;
 
 public class GeometryParser {
     private FileInputStream _reader;
@@ -21,12 +20,14 @@ public class GeometryParser {
         switch (type){
             case "parallelogram":
                 return ReadParallelogram();
+            case "":
+                throw null;
             default:
-                return null;
+                throw new InvalidArgumentException("Unrecognised figure type");
             
         }
     }
-    private Parallelogram ReadParallelogram() throws IOException, InvalidParallelogramInputVectorsException {
+    private Parallelogram ReadParallelogram() throws Exception, InvalidParallelogramInputVectorsException {
         List<Vector> vectors = new ArrayList<>(2);
         String name = null;
         Color color = null;
@@ -41,7 +42,7 @@ public class GeometryParser {
                     vectors.add(ReadVector());
                     break;
                 case "NAME":
-                    name = ReadName();
+                    name = ReadWord();
                     break;
                 case "COLOR":
                     color = ReadColor();
@@ -52,18 +53,18 @@ public class GeometryParser {
         }
 
         if (vectors.size() != 2) {
-            throw new IOException("Parallelogram requires exactly 2 vectors, got " + vectors.size());
+            throw new Exception("Parallelogram requires exactly 2 vectors, got " + vectors.size());
         }
         if (name == null) {
-            throw new IOException("Parallelogram has no NAME");
+            throw new Exception("Parallelogram has no NAME");
         }
         if (color == null) {
-            throw new IOException("Parallelogram has no COLOR");
+            throw new Exception("Parallelogram has no COLOR");
         }
 
         return new Parallelogram(vectors.get(0), vectors.get(1), name, color);
     }
-    private Vector ReadVector() throws IOException {
+    private Vector ReadVector() throws Exception {
         String raw = ReadWord();
         String[] parts = raw.split(",", -1);
         if (parts.length != 2) {
@@ -78,14 +79,7 @@ public class GeometryParser {
             throw new IOException("Invalid vector '" + raw + "'", e);
         }
     }
-    private String ReadName() throws IOException {
-        String name = ReadWord();
-        if (name.isEmpty()) {
-            throw new IOException("Unexpected end of file while reading NAME");
-        }
-        return name;
-    }
-    private Color ReadColor() throws IOException {
+    private Color ReadColor() throws Exception {
         String raw = ReadWord();
         String[] parts = raw.split(",", -1);
         if (parts.length != 3) {
@@ -97,10 +91,10 @@ public class GeometryParser {
             int b = Integer.parseInt(parts[2].trim());
             return new Color(r, g, b);
         } catch (NumberFormatException e) {
-            throw new IOException("Invalid color '" + raw + "'", e);
+            throw new Exception("Invalid color '" + raw + "'", e);
         }
     }
-    private String ReadWord() throws IOException{
+    private String ReadWord() throws Exception{
         int i;
         String word = "";
         boolean found = false;

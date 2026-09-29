@@ -4,3 +4,10 @@ VEC 0,5
 COLOR 0,0,0
 NAME prikol
 END
+
+FIGURE parallelogram
+VEC 6,0
+VEC 2,5
+COLOR 0,0,0
+NAME prikol
+END
