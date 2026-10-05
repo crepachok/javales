@@ -1,5 +1,7 @@
 package gem;
 
+import java.awt.*;
+
 public interface IFlatFigure{
     double GetArea();
     double GetPerimeter();

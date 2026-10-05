@@ -1,5 +1,7 @@
 package gem;
 
+import java.awt.*;
+
 public class Parallelogram implements IFlatFigure, Comparable<Parallelogram>{
     private Vector _top;
     private Vector _bot;
