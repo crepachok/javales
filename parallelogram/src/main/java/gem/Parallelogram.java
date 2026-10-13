@@ -3,8 +3,8 @@ package gem;
 import java.awt.*;
 
 public class Parallelogram implements IFlatFigure, Comparable<Parallelogram>{
-    private Vector _top;
-    private Vector _bot;
+    private Vector _first;
+    private Vector _second;
     private double _angle;
 
     public String Name;
@@ -17,7 +17,7 @@ public class Parallelogram implements IFlatFigure, Comparable<Parallelogram>{
         if (bot.GetAngleToHorizon() == top.GetAngleToHorizon())
             throw new InvalidParallelogramInputVectorsException("Вектора не должны лежать на одной линии");
 
-        _top = top; _bot = bot;
+        _first = top; _second = bot;
         _angle = Vector.GetAngle(top, bot);
     }
 
@@ -42,15 +42,21 @@ public class Parallelogram implements IFlatFigure, Comparable<Parallelogram>{
     public Color GetColor(){ 
         return Color;
     }
+    public Vector GetFirstVector(){
+        return _second;
+    } 
+    public Vector GetSecondVector(){
+        return _first;
+    }
 
     public double GetArea(){
-        double height = _top.GetLength() * Math.sin(_angle);
+        double height = _first.GetLength() * Math.sin(_angle);
 
-        return _bot.GetLength() * height;
+        return _second.GetLength() * height;
     }
 
     public double GetPerimeter(){
-        return 2 * (_top.GetLength() + _bot.GetLength());
+        return 2 * (_first.GetLength() + _second.GetLength());
     }
 
     public int compareTo(Parallelogram b){

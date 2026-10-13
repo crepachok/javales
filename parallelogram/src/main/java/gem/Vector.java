@@ -30,4 +30,9 @@ public class Vector {
 
         return GetAngle(this, horizon);
     }
+
+    @Override 
+    public String toString(){
+        return x + "," + y;
+    }
 }

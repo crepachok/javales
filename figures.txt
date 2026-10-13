@@ -1,0 +1,13 @@
+FIGURE parallelogram
+VEC 3,0
+VEC 0,4
+NAME Para1
+COLOR 255,0,0
+END
+
+FIGURE parallelogram
+VEC 5,0
+VEC 0,2
+NAME Para2
+COLOR 0,0,255
+END
