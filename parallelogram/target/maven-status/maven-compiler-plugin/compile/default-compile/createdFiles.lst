@@ -1,0 +1,12 @@
+gem\InvalidArgumentException.class
+gem\Main.class
+gem\ITitled.class
+gem\ParallelogramAreaComparator.class
+gem\InvalidParallelogramInputVectorsException.class
+gem\GeometryParser.class
+gem\Main$ShapeRow.class
+gem\IFlatFigure.class
+gem\Parallelogram.class
+gem\ParallelogramPerimeterComparator.class
+gem\Point.class
+gem\Vector.class
