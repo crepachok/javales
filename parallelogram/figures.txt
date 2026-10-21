@@ -1,0 +1,25 @@
+{
+    "Figures": [
+	{
+	    "Type": "Parallelogram",
+	    "Vec1": "1,4",
+	    "Vec2": "4,5",
+	    "Name": "first",
+	    "Color": "14,14,14"
+	},
+	{
+	    "Type": "Parallelogram",
+	    "Vec1": "5,4",
+	    "Vec2": "2,5",
+	    "Name": "second",
+	    "Color": "14,14,14"
+	},
+	{
+	    "Type": "Parallelogram",
+	    "Vec1": "7,2",
+	    "Vec2": "1,2",
+	    "Name": "third",
+	    "Color": "14,14,14"
+	}
+    ]
+}

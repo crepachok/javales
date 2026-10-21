@@ -6,9 +6,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Координаты проекта -->
-    <groupId>com.example</groupId>       <!-- обычно перевёрнутый домен -->
-    <artifactId>shapes-app</artifactId>  <!-- имя проекта -->
+    <groupId>com.example</groupId>
+    <artifactId>shapes-app</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -24,18 +23,22 @@
             <artifactId>json</artifactId>
             <version>20260814</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.53.4.0</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Компилятор -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
             </plugin>
 
-            <!-- Собрать «толстый» jar со всеми зависимостями -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>

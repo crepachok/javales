@@ -18,6 +18,19 @@ public class Vector {
         return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     }
 
+    public static Vector FromString(String str) throws NumberFormatException{
+        String[] parts = str.split(",");
+
+        return new Vector(
+            Double.parseDouble(parts[0].trim()),
+            Double.parseDouble(parts[1].trim()));
+    }
+
+    @Override 
+    public String toString(){
+        return x + "," + y;
+    }
+
     public static double GetAngle(Vector a, Vector b){
         double scalar = a.x * b.x + a.y * b.y;
         double lenProd = a.GetLength() * b.GetLength();
