@@ -16,7 +16,7 @@ public class DbContext {
         Statement statement = sql.createStatement()){
             String createFirst = """
                 CREATE TABLE IF NOT EXISTS figures (
-                    id    INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Id    INTEGER PRIMARY KEY AUTOINCREMENT,
                     Type  VARCHAR NOT NULL,
                     Name  VARCHAR NOT NULL,
                     Color VARCHAR NOT NULL,
@@ -27,7 +27,7 @@ public class DbContext {
 
             String createSecond = """
                 CREATE TABLE IF NOT EXISTS json (
-                    id   INTEGER PRIMARY KEY REFERENCES figures(id),
+                    Id   INTEGER PRIMARY KEY REFERENCES figures(Id),
                     Data BLOB    NOT NULL
                 );
                 """;
@@ -50,7 +50,7 @@ public class DbContext {
                 String name  = rs.getString("Name");
                 Color color = ColorUtils.FromString(rs.getString("Color"));
 
-                if ("Parallelogram".equals(type)) {
+                if (type.equals("Parallelogram")) {
                     Vector v1 = Vector.FromString(rs.getString("Vec1"));
                     Vector v2 = Vector.FromString(rs.getString("Vec2"));
                     result.add(new Parallelogram(v1, v2, name, color));
@@ -65,26 +65,40 @@ public class DbContext {
             c.setAutoCommit(false);
 
             try (Statement st = c.createStatement()) {
+                st.executeUpdate("DELETE FROM json");
                 st.executeUpdate("DELETE FROM figures");
             }
 
-            String sql = "INSERT INTO figures(Type, Name, Color, Vec1, Vec2) VALUES (?,?,?,?,?)";
-            try (PreparedStatement ps = c.prepareStatement(sql)) {
+            String insertFigureRaw = "INSERT INTO figures(Type, Name, Color, Vec1, Vec2) VALUES (?,?,?,?,?)";
+            String insertBlobRaw = "INSERT INTO json(id, Data) VALUES (?,?)";
+
+            try (PreparedStatement fs = c.prepareStatement(insertFigureRaw);
+                PreparedStatement ss = c.prepareStatement(insertBlobRaw)) {
                 for (IFlatFigure f : figures) {
-                    ps.setString(1, f.GetType());
-                    ps.setString(2, f.GetName());
-                    ps.setString(3, ColorUtils.ToString(f.GetColor()));
+                    fs.setString(1, f.GetType());
+                    fs.setString(2, f.GetName());
+                    fs.setString(3, ColorUtils.ToString(f.GetColor()));
 
                     if (f instanceof Parallelogram p) {
-                        ps.setString(4, p.GetFirstVector().toString());
-                        ps.setString(5, p.GetSecondVector().toString());
+                        fs.setString(4, p.GetFirstVector().toString());
+                        fs.setString(5, p.GetSecondVector().toString());
                     } else {
-                        ps.setNull(4, Types.VARCHAR);
-                        ps.setNull(5, Types.VARCHAR);
+                        fs.setNull(4, Types.VARCHAR);
+                        fs.setNull(5, Types.VARCHAR);
                     }
-                    ps.addBatch();
+                    
+                    fs.executeUpdate();
+
+                    ResultSet key = fs.getGeneratedKeys();
+                    int generatedId = key.getInt(1);
+
+                    byte[] serialized = f.ToJSON().toString().getBytes();
+
+                    ss.setInt(1, generatedId);
+                    ss.setBytes(2, serialized);
+
+                    ss.executeUpdate();
                 }
-                ps.executeBatch();
             }
 
             c.commit();

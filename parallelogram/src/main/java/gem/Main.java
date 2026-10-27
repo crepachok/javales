@@ -51,8 +51,8 @@ public class Main {
         JButton exitBtn  = new JButton("Выйти");
 
         topLeft.add(openBtn);
+
         topLeft.add(openDbBtn);
-        topLeft.add(saveBtn);
         topLeft.add(saveDbBtn);
         topLeft.add(closeBtn);
         topRight.add(exitBtn);
@@ -66,7 +66,6 @@ public class Main {
         leftScroll.setBorder(BorderFactory.createTitledBorder("Загруженные фигуры"));
 
         viewPanel.setBackground(new Color(245, 245, 245));
-        viewPanel.setBorder(BorderFactory.createTitledBorder(""));
 
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                                           leftScroll, viewPanel);
